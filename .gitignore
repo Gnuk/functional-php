@@ -1,0 +1,6 @@
+/coverage/
+/vendor/
+.idea/
+.phpunit.result.cache
+*.iml
+/cache/
