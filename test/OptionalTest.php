@@ -40,6 +40,7 @@ class OptionalTest extends TestCase
      */
     function shouldGetWrappedValue() {
         self::assertSame(42, $this->valuated->get());
+        self::assertSame(42, $this->valuated->orElse(23));
     }
 
     /**
@@ -61,6 +62,7 @@ class OptionalTest extends TestCase
      */
     function shouldBeEmptyWhenEmpty() {
         self::assertTrue($this->empty->isEmpty());
+        self::assertSame(23, $this->empty->orElse(23));
     }
 
     /**
@@ -80,5 +82,19 @@ class OptionalTest extends TestCase
                 self::assertStringContainsString('Empty optional', $exception->getMessage());
             },
             fn() => $this->empty->get());
+    }
+
+    /**
+     * @test
+     */
+    function shouldBeEmptyFromNullable() {
+        self::assertTrue(Optional::ofNullable(null)->isEmpty());
+    }
+
+    /**
+     * @test
+     */
+    function shouldBeValuatedFromNonNullValue() {
+        self::assertSame(0, Optional::ofNullable(0)->get());
     }
 }

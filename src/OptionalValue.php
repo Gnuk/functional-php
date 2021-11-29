@@ -23,4 +23,9 @@ class OptionalValue extends Optional
     {
         return false;
     }
+
+    function orElse(mixed $other): mixed
+    {
+        return $this->value;
+    }
 }

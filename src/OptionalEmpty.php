@@ -23,4 +23,9 @@ class OptionalEmpty extends Optional
     {
         return true;
     }
+
+    function orElse(mixed $other): mixed
+    {
+        return $other;
+    }
 }

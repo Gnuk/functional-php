@@ -15,6 +15,14 @@ abstract class Optional
         return new OptionalValue($value);
     }
 
+    public static function ofNullable(mixed $value): Optional
+    {
+        if (is_null($value)) {
+            return new OptionalEmpty();
+        }
+        return new OptionalValue($value);
+    }
+
     abstract function isEmpty(): bool;
 
     /**
@@ -23,4 +31,6 @@ abstract class Optional
     abstract function get(): mixed;
 
     abstract function map(\Closure $transform): Optional;
+
+    abstract function orElse(mixed $other): mixed;
 }
