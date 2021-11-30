@@ -28,4 +28,19 @@ class OptionalValue extends Optional
     {
         return $this->value;
     }
+
+    function orElseGet(\Closure $other): mixed
+    {
+        return $this->value;
+    }
+
+    function ifPresent(\Closure $action): void
+    {
+        $action($this->value);
+    }
+
+    function ifPresentOrElse(\Closure $action, \Closure $otherAction): void
+    {
+        $action($this->value);
+    }
 }

@@ -33,4 +33,10 @@ abstract class Optional
     abstract function map(\Closure $transform): Optional;
 
     abstract function orElse(mixed $other): mixed;
+
+    abstract function orElseGet(\Closure $other): mixed;
+
+    abstract function ifPresent(\Closure $action): void;
+
+    abstract function ifPresentOrElse(\Closure $action, \Closure $otherAction): void;
 }

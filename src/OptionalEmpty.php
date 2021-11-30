@@ -28,4 +28,19 @@ class OptionalEmpty extends Optional
     {
         return $other;
     }
+
+    function orElseGet(\Closure $other): mixed
+    {
+        return $other();
+    }
+
+    function ifPresent(\Closure $action): void
+    {
+        // Nothing to do because it's empty
+    }
+
+    function ifPresentOrElse(\Closure $action, \Closure $otherAction): void
+    {
+        $otherAction();
+    }
 }
