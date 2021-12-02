@@ -43,4 +43,18 @@ class OptionalValue extends Optional
     {
         $action($this->value);
     }
+
+    function isPresent(): bool
+    {
+        return true;
+    }
+
+    function filter(\Closure $filter): Optional
+    {
+        if(!$filter($this->value)) {
+            return Optional::empty();
+        }
+
+        return $this;
+    }
 }

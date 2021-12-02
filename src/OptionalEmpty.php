@@ -43,4 +43,14 @@ class OptionalEmpty extends Optional
     {
         $otherAction();
     }
+
+    function isPresent(): bool
+    {
+        return false;
+    }
+
+    function filter(\Closure $filter): Optional
+    {
+        return $this;
+    }
 }

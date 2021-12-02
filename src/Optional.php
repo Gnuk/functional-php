@@ -39,4 +39,8 @@ abstract class Optional
     abstract function ifPresent(\Closure $action): void;
 
     abstract function ifPresentOrElse(\Closure $action, \Closure $otherAction): void;
+
+    abstract function isPresent(): bool;
+
+    abstract function filter(\Closure $filter): Optional;
 }

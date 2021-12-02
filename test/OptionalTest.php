@@ -7,6 +7,7 @@ use Gnuk\Functional\EmptyValueException;
 use Gnuk\Functional\Optional;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use function PHPUnit\Framework\assertTrue;
 
 class OptionalTest extends TestCase
 {
@@ -53,6 +54,7 @@ class OptionalTest extends TestCase
      * @test
      */
     function shouldBePresentWhenValuated() {
+        self::assertTrue($this->valuated->isPresent());
         self::assertFalse($this->valuated->isEmpty());
     }
 
@@ -68,6 +70,13 @@ class OptionalTest extends TestCase
      */
     function shouldBeEmptyWhenEmpty() {
         self::assertTrue($this->empty->isEmpty());
+        self::assertFalse($this->empty->isPresent());
+    }
+
+    /**
+     * @test
+     */
+    function shouldGetOtherWhenEmpty() {
         self::assertSame(self::$OTHER_VALUE, $this->empty->orElse(self::$OTHER_VALUE));
         self::assertSame(self::$OTHER_VALUE, $this->empty->orElseGet($this->otherPredicate));
     }
@@ -163,5 +172,26 @@ class OptionalTest extends TestCase
         $this->empty->ifPresentOrElse($action, $otherAction);
 
         self::assertSame(self::$OTHER_VALUE, $register);
+    }
+
+    /**
+     * @test
+     */
+    function shouldFilterToEmptyWhenPredicateIsFalse() {
+        self::assertTrue($this->valuated->filter(fn($value) => $value === self::$OTHER_VALUE)->isEmpty());
+    }
+
+    /**
+     * @test
+     */
+    function shouldFilterToSameWhenPredicateIsTrue() {
+        self::assertSame(self::$VALUE, $this->valuated->filter(fn($value) => $value === self::$VALUE)->get());
+    }
+
+    /**
+     * @test
+     */
+    function shouldFilterToEmptyWhenAlreadyEmpty() {
+        self::assertTrue($this->empty->filter(fn($value) => $value === self::$VALUE)->isEmpty());
     }
 }
